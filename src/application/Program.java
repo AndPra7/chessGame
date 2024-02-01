@@ -27,6 +27,7 @@ public class Program {
 				boolean[][] possibleMoves = chessMatch.possibleMoves(source);
 				UI.clearScreen();
 				//responsável por imprimir o tabuleiro com as posições possíveis da determinada peça
+				//trata-se de uma sobrecarga aqui
 				UI.printBoard(chessMatch.getPieces(), possibleMoves);
 				
 				System.out.println();
