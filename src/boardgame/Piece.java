@@ -23,7 +23,7 @@ public abstract class Piece {
 		return possibleMoves()[position.getRow()][position.getColumn()];
 	}
 	
-	//contase existe pelo menos um movimento possível para a peça
+	//conta-se existe pelo menos um movimento possível para a peça
 	//implementação padrão que depende de um método abstrato
 	public boolean isThereAnyPossibleMove() {
 		boolean[][] mat = possibleMoves();

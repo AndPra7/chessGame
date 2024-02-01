@@ -35,6 +35,8 @@ public class ChessMatch {
 		
 		//validando se existe uma peça na posição informada
 		validateSourcePosition(source);
+		//
+		validateTargetPosition(source, target);
 		//operação responsável por realizar a movimentação da peça
 		Piece capturePiece = makeMove(source, target);
 		//faz um downcasting porque a peça era do tipo Piece
@@ -58,6 +60,12 @@ public class ChessMatch {
 		//testa se existe movimentos possíveis para a peça
 		if(!board.piece(position).isThereAnyPossibleMove()) {
 			throw new ChessException("There is no possible moves for the chosen piece");
+		}
+	}
+	
+	private void validateTargetPosition(Position source, Position target) {
+		if(!board.piece(source).possibleMove(target)) {
+			throw new ChessException("The chosen piece can't move to target position");
 		}
 	}
 
