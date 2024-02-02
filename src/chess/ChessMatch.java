@@ -7,13 +7,25 @@ import chess.pieces.King;
 import chess.pieces.Rook;
 
 public class ChessMatch {
-
+	
+	private int turn;
+	private Color currentPlayer;
 	private Board board;
 
 	public ChessMatch() {
 		// quando a partida for iniciada, cria um tabuleiro 8 por 8 e chama initialSetup
 		board = new Board(8, 8);
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		initialSetup();
+	}
+	
+	public int getTurn() {
+		return turn;
+	}
+	
+	public Color getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	public ChessPiece[][] getPieces() {
@@ -47,6 +59,10 @@ public class ChessMatch {
 		validateTargetPosition(source, target);
 		//operação responsável por realizar a movimentação da peça
 		Piece capturePiece = makeMove(source, target);
+		
+		//troca o turno
+		nextTurn();
+		
 		//faz um downcasting porque a peça era do tipo Piece
 		return (ChessPiece)capturePiece;
 	}
@@ -65,6 +81,12 @@ public class ChessMatch {
 		if(!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece on source position");
 		}
+		
+		//verifica se a peça que esta tentando mover é do adversário
+		if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()) {
+			throw new ChessException("The chosen piece is not yours");
+		}
+		
 		//testa se existe movimentos possíveis para a peça
 		if(!board.piece(position).isThereAnyPossibleMove()) {
 			throw new ChessException("There is no possible moves for the chosen piece");
@@ -75,6 +97,12 @@ public class ChessMatch {
 		if(!board.piece(source).possibleMove(target)) {
 			throw new ChessException("The chosen piece can't move to target position");
 		}
+	}
+	
+	private void nextTurn() {
+		turn++;
+		//Se o jogador for Branco Então = ? ele vai ser Preto, caso contrário será Branco
+		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
 	}
 
 	// esse método receberá as coordenadas do xadrez
